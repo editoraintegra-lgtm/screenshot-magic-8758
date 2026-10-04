@@ -14,16 +14,142 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      articles: {
+        Row: {
+          audio_url: string | null
+          author_name: string | null
+          body: Json
+          cover_alt: string | null
+          cover_caption: string | null
+          cover_credit: string | null
+          cover_url: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_demo: boolean
+          is_featured: boolean
+          is_main_headline: boolean
+          kind: string
+          published_at: string
+          section: string
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          status: string
+          subsection: string | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          audio_url?: string | null
+          author_name?: string | null
+          body?: Json
+          cover_alt?: string | null
+          cover_caption?: string | null
+          cover_credit?: string | null
+          cover_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          is_featured?: boolean
+          is_main_headline?: boolean
+          kind?: string
+          published_at?: string
+          section: string
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          status?: string
+          subsection?: string | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          audio_url?: string | null
+          author_name?: string | null
+          body?: Json
+          cover_alt?: string | null
+          cover_caption?: string | null
+          cover_credit?: string | null
+          cover_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          is_featured?: boolean
+          is_main_headline?: boolean
+          kind?: string
+          published_at?: string
+          section?: string
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          status?: string
+          subsection?: string | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      newsletter_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "editor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +276,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "editor"],
+    },
   },
 } as const

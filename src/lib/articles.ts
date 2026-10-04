@@ -84,14 +84,12 @@ export const searchQuery = (term: string, order: "relevance" | "date") =>
       const like = `%${t}%`;
       const { data, error } = await supabase
         .from("articles")
-        .select(LIST_COLS + ",body")
-        .or(
-          `title.ilike.${like},subtitle.ilike.${like},author_name.ilike.${like},section.ilike.${like},subsection.ilike.${like},body::text.ilike.${like}`,
-        )
+        .select(LIST_COLS)
+        .ilike("search_text", like)
         .order("published_at", { ascending: false })
         .limit(60);
       if (error) throw error;
-      const rows = (data ?? []) as unknown as (ArticleSummary & { body: unknown })[];
+      const rows = (data ?? []) as ArticleSummary[];
       if (order === "date") return rows;
       const low = t.toLowerCase();
       const score = (a: ArticleSummary) =>

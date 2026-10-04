@@ -31,6 +31,7 @@ export type Database = {
           is_main_headline: boolean
           kind: string
           published_at: string
+          search_text: string | null
           section: string
           seo_description: string | null
           seo_title: string | null
@@ -58,6 +59,7 @@ export type Database = {
           is_main_headline?: boolean
           kind?: string
           published_at?: string
+          search_text?: string | null
           section: string
           seo_description?: string | null
           seo_title?: string | null
@@ -85,6 +87,7 @@ export type Database = {
           is_main_headline?: boolean
           kind?: string
           published_at?: string
+          search_text?: string | null
           section?: string
           seo_description?: string | null
           seo_title?: string | null

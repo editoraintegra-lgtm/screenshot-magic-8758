@@ -10,33 +10,160 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BuscaRouteImport } from './routes/busca'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SectionIndexRouteImport } from './routes/$section.index'
+import { Route as SectionSubRouteImport } from './routes/$section.$sub'
+import { Route as InstitucionalPageRouteImport } from './routes/institucional.$page'
+import { Route as NoticiaSlugRouteImport } from './routes/noticia.$slug'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminIdRouteImport } from './routes/_authenticated/admin.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuscaRoute = BuscaRouteImport.update({
+  id: '/busca',
+  path: '/busca',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SectionIndexRoute = SectionIndexRouteImport.update({
+  id: '/$section/',
+  path: '/$section/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SectionSubRoute = SectionSubRouteImport.update({
+  id: '/$section/$sub',
+  path: '/$section/$sub',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InstitucionalPageRoute = InstitucionalPageRouteImport.update({
+  id: '/institucional/$page',
+  path: '/institucional/$page',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiaSlugRoute = NoticiaSlugRouteImport.update({
+  id: '/noticia/$slug',
+  path: '/noticia/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminIdRoute = AuthenticatedAdminIdRouteImport.update({
+  id: '/admin/$id',
+  path: '/admin/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/busca': typeof BuscaRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$section/$sub': typeof SectionSubRoute
+  '/institucional/$page': typeof InstitucionalPageRoute
+  '/noticia/$slug': typeof NoticiaSlugRoute
+  '/$section/': typeof SectionIndexRoute
+  '/admin/$id': typeof AuthenticatedAdminIdRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/busca': typeof BuscaRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$section/$sub': typeof SectionSubRoute
+  '/institucional/$page': typeof InstitucionalPageRoute
+  '/noticia/$slug': typeof NoticiaSlugRoute
+  '/$section': typeof SectionIndexRoute
+  '/admin/$id': typeof AuthenticatedAdminIdRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/busca': typeof BuscaRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$section/$sub': typeof SectionSubRoute
+  '/institucional/$page': typeof InstitucionalPageRoute
+  '/noticia/$slug': typeof NoticiaSlugRoute
+  '/$section/': typeof SectionIndexRoute
+  '/_authenticated/admin/$id': typeof AuthenticatedAdminIdRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/busca'
+    | '/sitemap.xml'
+    | '/$section/$sub'
+    | '/institucional/$page'
+    | '/noticia/$slug'
+    | '/$section/'
+    | '/admin/$id'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/busca'
+    | '/sitemap.xml'
+    | '/$section/$sub'
+    | '/institucional/$page'
+    | '/noticia/$slug'
+    | '/$section'
+    | '/admin/$id'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/busca'
+    | '/sitemap.xml'
+    | '/$section/$sub'
+    | '/institucional/$page'
+    | '/noticia/$slug'
+    | '/$section/'
+    | '/_authenticated/admin/$id'
+    | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  BuscaRoute: typeof BuscaRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SectionSubRoute: typeof SectionSubRoute
+  InstitucionalPageRoute: typeof InstitucionalPageRoute
+  NoticiaSlugRoute: typeof NoticiaSlugRoute
+  SectionIndexRoute: typeof SectionIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +175,102 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/busca': {
+      id: '/busca'
+      path: '/busca'
+      fullPath: '/busca'
+      preLoaderRoute: typeof BuscaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$section/': {
+      id: '/$section/'
+      path: '/$section'
+      fullPath: '/$section/'
+      preLoaderRoute: typeof SectionIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$section/$sub': {
+      id: '/$section/$sub'
+      path: '/$section/$sub'
+      fullPath: '/$section/$sub'
+      preLoaderRoute: typeof SectionSubRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/institucional/$page': {
+      id: '/institucional/$page'
+      path: '/institucional/$page'
+      fullPath: '/institucional/$page'
+      preLoaderRoute: typeof InstitucionalPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticia/$slug': {
+      id: '/noticia/$slug'
+      path: '/noticia/$slug'
+      fullPath: '/noticia/$slug'
+      preLoaderRoute: typeof NoticiaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/$id': {
+      id: '/_authenticated/admin/$id'
+      path: '/admin/$id'
+      fullPath: '/admin/$id'
+      preLoaderRoute: typeof AuthenticatedAdminIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminIdRoute: typeof AuthenticatedAdminIdRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminIdRoute: AuthenticatedAdminIdRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  BuscaRoute: BuscaRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SectionSubRoute: SectionSubRoute,
+  InstitucionalPageRoute: InstitucionalPageRoute,
+  NoticiaSlugRoute: NoticiaSlugRoute,
+  SectionIndexRoute: SectionIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

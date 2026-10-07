@@ -27,18 +27,18 @@ function AdminList() {
     },
   });
 
-  const update = async (id: string, patch: Record<string, unknown>) => {
+  const update = async (id: string, patch: { is_main_headline?: boolean; is_featured?: boolean }): Promise<void> => {
     if (patch.is_main_headline) await supabase.from("articles").update({ is_main_headline: false }).eq("is_main_headline", true);
     const { error } = await supabase.from("articles").update(patch).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Atualizado");
     refetch(); qc.invalidateQueries({ queryKey: ["home"] });
   };
 
-  const removeDemo = async () => {
+  const removeDemo = async (): Promise<void> => {
     if (!confirm("Apagar todo o conteúdo de exemplo?")) return;
     const { error } = await supabase.from("articles").delete().eq("is_demo", true);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     refetch();
   };
 

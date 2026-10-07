@@ -24,7 +24,7 @@ export function Header() {
     <header className="bg-background">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-center justify-between border-b py-2 text-xs text-muted-foreground">
-          <span className="capitalize">{today}</span>
+          <span>{today.charAt(0).toUpperCase() + today.slice(1)}</span>
           <SocialLinks className="hidden sm:flex" />
         </div>
         <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 py-5 md:py-7">

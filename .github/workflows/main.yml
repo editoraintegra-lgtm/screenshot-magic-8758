@@ -14,8 +14,9 @@ jobs:
 
       - run: bun install
       
-      - run: bun run build
-
+      - run: bun run build --prerender
+        env:
+          NITRO_PRESET: static
       - uses: actions/upload-artifact@v4
         with:
           name: dist-build

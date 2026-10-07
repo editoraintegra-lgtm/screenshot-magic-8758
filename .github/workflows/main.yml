@@ -13,7 +13,7 @@ jobs:
           bun-version: latest
 
       - run: bun install
-      - name: Build project
+      
       - run: bun run build
         env:
            NITRO_PRESET: static

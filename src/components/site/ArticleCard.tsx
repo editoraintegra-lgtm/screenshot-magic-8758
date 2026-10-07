@@ -11,7 +11,7 @@ export function DemoTag({ show }: { show: boolean }) {
   return <span className="ml-2 border border-muted-foreground/40 px-1 text-[0.6rem] font-semibold uppercase tracking-wider text-muted-foreground">Exemplo</span>;
 }
 
-function Thumb({ a, className = "", eager = false }: { a: ArticleSummary; className?: string; eager?: boolean }) {
+function Thumb({ a, className = "", eager = false }: { a: ArticleSummary; className?: string; eager?: boolean | undefined }) {
   if (!a.cover_url) return null;
   return (
     <div className={`relative overflow-hidden bg-muted ${className}`}>
@@ -22,7 +22,7 @@ function Thumb({ a, className = "", eager = false }: { a: ArticleSummary; classN
   );
 }
 
-export function ArticleCard({ a, variant = "card", eager }: { a: ArticleSummary; variant?: Variant; eager?: boolean }) {
+export function ArticleCard({ a, variant = "card", eager }: { a: ArticleSummary; variant?: Variant; eager?: boolean | undefined }) {
   const link = { to: "/noticia/$slug" as const, params: { slug: a.slug } };
   const kicker = <p className="kicker">{labelFor(a.section, a.subsection)}<DemoTag show={a.is_demo} /></p>;
 

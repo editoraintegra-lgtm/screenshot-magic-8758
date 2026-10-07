@@ -13,7 +13,7 @@ export function RichText({ text }: { text: string }) {
     if (tok.startsWith("**")) out.push(<strong key={i++}>{tok.slice(2, -2)}</strong>);
     else if (tok.startsWith("*")) out.push(<em key={i++}>{tok.slice(1, -1)}</em>);
     else {
-      const [, label, href] = /\[([^\]]+)\]\(([^)]+)\)/.exec(tok)!;
+      const mm = /\[([^\]]+)\]\(([^)]+)\)/.exec(tok)!; const label = mm[1] ?? ""; const href = mm[2] ?? "#";
       const safe = /^(https?:\/\/|\/)/.test(href) ? href : "#";
       const ext = safe.startsWith("http");
       out.push(<a key={i++} href={safe} {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{label}</a>);

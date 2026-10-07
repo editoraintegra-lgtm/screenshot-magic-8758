@@ -24,7 +24,7 @@ export function VideoPlayer({ url, title = "Vídeo" }: { url: string; title?: st
 }
 
 export function Figure({ url, alt, caption, credit, eager, className = "" }: {
-  url: string; alt?: string | null; caption?: string | null; credit?: string | null; eager?: boolean; className?: string;
+  url: string; alt?: string | null | undefined; caption?: string | null | undefined; credit?: string | null | undefined; eager?: boolean | undefined; className?: string;
 }) {
   const [open, setOpen] = useState(false);
   return (

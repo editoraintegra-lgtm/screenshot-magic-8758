@@ -139,8 +139,8 @@ function Editor() {
 
   const sec = getSection(f.section);
 
-  const save = async (status?: string) => {
-    if (!f.title.trim()) return toast.error("Informe a manchete.");
+  const save = async (status?: string): Promise<void> => {
+    if (!f.title.trim()) { toast.error("Informe a manchete."); return; }
     setSaving(true);
     const { data: u } = await supabase.auth.getUser();
     const payload = {
@@ -153,10 +153,10 @@ function Editor() {
     };
     if (payload.is_main_headline) await supabase.from("articles").update({ is_main_headline: false }).eq("is_main_headline", true).neq("id", isNew ? "00000000-0000-0000-0000-000000000000" : id);
     const res = isNew
-      ? await supabase.from("articles").insert({ ...payload, created_by: u.user?.id }).select("id").single()
+      ? await supabase.from("articles").insert({ ...payload, created_by: u.user?.id ?? null }).select("id").single()
       : await supabase.from("articles").update(payload).eq("id", id).select("id").single();
     setSaving(false);
-    if (res.error) return toast.error(res.error.message.includes("slug") ? "Já existe uma notícia com esse endereço." : res.error.message);
+    if (res.error) { toast.error(res.error.message.includes("slug") ? "Já existe uma notícia com esse endereço." : res.error.message); return; }
     toast.success("Salvo");
     set("status", payload.status);
     if (isNew) navigate({ to: "/admin/$id", params: { id: res.data.id } });
@@ -170,7 +170,7 @@ function Editor() {
 
   const moveBlock = (i: number, d: number) => setF((p) => {
     const b = [...p.body]; const j = i + d; if (j < 0 || j >= b.length) return p;
-    [b[i], b[j]] = [b[j], b[i]]; return { ...p, body: b };
+    const t = b[i]!; b[i] = b[j]!; b[j] = t; return { ...p, body: b };
   });
 
   if (!loaded) return <p className="text-muted-foreground">Carregando…</p>;

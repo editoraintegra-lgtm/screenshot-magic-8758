@@ -38,7 +38,7 @@ function SectionHeader({ slug, title }: { slug: string; title?: string }) {
 
 function SectionBlock({ slug, items }: { slug: string; items: ArticleSummary[] }) {
   if (!items.length) return null;
-  const [lead, ...rest] = items;
+  const [lead, ...rest] = items as [ArticleSummary, ...ArticleSummary[]];
   const s = getSection(slug)!;
   return (
     <section className="mt-14">
@@ -76,6 +76,7 @@ function Home() {
   const latest = all.slice(0, 8);
   const more = all.filter((a) => a.id !== main?.id && !sec.includes(a)).slice(0, 8);
   const special = by("especial");
+  const sp = special[0];
   const videos = by("videos");
 
   return (
@@ -140,15 +141,15 @@ function Home() {
         </section>
       </div>
 
-      {special.length > 0 && (
+      {sp && (
         <section className="mt-16 bg-special text-special-foreground">
           <div className="mx-auto max-w-7xl px-4 py-14">
             <Link to="/$section" params={{ section: "especial" }} className="text-xs font-bold uppercase tracking-[0.25em] opacity-80">Especial</Link>
             <div className="mt-6 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
-              <Link to="/noticia/$slug" params={{ slug: special[0].slug }} className="group">
-                {special[0].cover_url && <img src={special[0].cover_url} alt={special[0].cover_alt ?? ""} loading="lazy" className="aspect-[16/9] w-full object-cover" />}
-                <h3 className="headline mt-5 text-3xl md:text-5xl">{special[0].title}<DemoTag show={special[0].is_demo} /></h3>
-                {special[0].subtitle && <p className="mt-3 text-lg opacity-80">{special[0].subtitle}</p>}
+              <Link to="/noticia/$slug" params={{ slug: sp.slug }} className="group">
+                {sp.cover_url && <img src={sp.cover_url} alt={sp.cover_alt ?? ""} loading="lazy" className="aspect-[16/9] w-full object-cover" />}
+                <h3 className="headline mt-5 text-3xl md:text-5xl">{sp.title}<DemoTag show={sp.is_demo} /></h3>
+                {sp.subtitle && <p className="mt-3 text-lg opacity-80">{sp.subtitle}</p>}
               </Link>
               <div className="grid content-start gap-6">
                 {special.slice(1, 4).map((a) => (
